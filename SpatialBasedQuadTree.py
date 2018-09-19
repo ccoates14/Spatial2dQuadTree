@@ -16,3 +16,13 @@ class spatialQaudTree2D:
         self.quadrant4 = None
 
     def add(self, item):
+        pass
+
+    def removeItem(self, item):
+        pass
+
+    def getAllItemsWithinWidthLength(self, orginX, originY, width, length):
+        pass
+
+    def getItemsFromQuadsIntersectingXY(self, originX, originY):
+        pass
