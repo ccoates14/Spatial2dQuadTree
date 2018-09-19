@@ -4,7 +4,7 @@ class spatialQaudTree2D:
 
     def __init__(self, originX, originY, length, width, storedItems, quadrantCapacity):
         self.originX = originX
-        self.orginY = originY
+        self.originY = originY
         self.length = length
         self.width = width
         self.storedItems = storedItems
@@ -18,11 +18,23 @@ class spatialQaudTree2D:
     def add(self, item):
         pass
 
+    def chooseQuadToAddTo(self, originX, originY):
+        pass
+
+    def isWithinCapacity(self):
+        return len(self.storedItems) + 1 < self.quadrantCapacity
+
+    def increaseQuadDepth(self):
+        pass
+
     def removeItem(self, item):
         pass
 
-    def getAllItemsWithinWidthLength(self, orginX, originY, width, length):
+    def getAllItemsWithinWidthLength(self, originX, originY, width, length):
         pass
 
     def getItemsFromQuadsIntersectingXY(self, originX, originY):
+        pass
+
+    def updateQuadToUpdatedItem(self, item):
         pass
