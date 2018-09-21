@@ -1,7 +1,5 @@
 class SpatialQuadTree2D:
 
-    itemsAndAssociatedQuads = {}
-
     def __init__(self, originX, originY, length, width, storedItems, quadrantCapacity):
         self.originX = originX
         self.originY = originY
@@ -14,7 +12,8 @@ class SpatialQuadTree2D:
         self.quadrant1 = None
         self.quadrant2 = None
         self.quadrant3 = None
-        self
+
+        self.itemsAndAssociatedQuads = {}
 
     def add(self, item):
 
@@ -69,10 +68,33 @@ class SpatialQuadTree2D:
         pass
 
     def containsItem(self, item):
-        pass
+        doesContainItem = False
+        if self.areChildrenBorn():
+            for c in self.getChildrenQuadAsList():
+                if c.containsItem(item):
+                    doesContainItem = True
+        else:
+            doesContainItem = item in self.itemsAndAssociatedQuads
+        return doesContainItem
 
-    def initChildQuads(self):
-        pass
+    def initChildQuads(self, clearParentItemsWhenDone=False):
+        x = self.originX
+        y = self.originY
+        l = self.length
+        w = self.width
+        itemsThatBelongInChild = self.findItemsThatBelongInQuad()
+
 
     def updateQuadToUpdatedItem(self, item):
         pass
+
+    def areChildrenBorn(self):
+        childrenAreBorn = False
+        for c in self.getChildrenQuadAsList():
+            if c is not None:
+                childrenAreBorn = True
+                break
+        return childrenAreBorn
+
+    def getChildrenQuadAsList(self):
+        return [self.quadrant0, self.quadrant1, self.quadrant2, self.quadrant3]
