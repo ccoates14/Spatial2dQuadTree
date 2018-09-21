@@ -14,6 +14,7 @@ class SpatialQuadTree2D:
         self.quadrant1 = None
         self.quadrant2 = None
         self.quadrant3 = None
+        self
 
     def add(self, item):
 
@@ -68,6 +69,9 @@ class SpatialQuadTree2D:
         pass
 
     def containsItem(self, item):
+        pass
+
+    def initChildQuads(self):
         pass
 
     def updateQuadToUpdatedItem(self, item):
