@@ -19,24 +19,27 @@ class SpatialQuadTree2D:
 
         '''
 
-        if what's being added isn't already contained within self
-        add it to the itemsDict
-        if within capacity add it to self list
-        else add it to the appropriate quad
-         and then iterate over my list
+        if the item being added doesnt contain item:
+            if not within capacity:
+                expandCapacity
+            else:
+                if has child quad:
+                    add to appropriate child quad based on location
+                else:
+                    add to itemsAssociated with this quad
         '''
 
         pass
 
-    def isWithinAddRange(self):
+    def isWithinAddRange(self, itemX, itemY, originX, originY, width, length):
+        return itemX >= originX and itemX <= originX + width and itemY >= originY and itemY <= originY + length
 
     def findItemsThatBelongInQuad(self, items, originX, originY, width, length):
         itemsBelonging = []
 
         for i in items:
-            if i.originX >= originX and i.originX <= originX + width:
-                if i.originY >= originY and i.originY <= originY + length:
-                    itemsBelonging.append(i)
+            if self.isWithinAddRange(i.originX, i.originY, originX, originY, width, length):
+                itemsBelonging.append(i)
 
         return itemsBelonging
 
@@ -47,42 +50,10 @@ class SpatialQuadTree2D:
         if originY < self.originY or originY > self.originY + self.length:
             raise ValueError("OriginY not within quad")
 
-        chooseFromLeftQuads = originX > self.originX + self.width / 2
-        chooseFromTopQuads = originY < self.originY + self.length / 2
-        quadToReturn = None
-        x = self.originX
-        y = self.originY
-        l = self.length / 2
-        w = self.width / 2
-        items = []
-        capacity = self.quadrantCapacity
 
-        if chooseFromLeftQuads and chooseFromTopQuads:
-            if self.quadrant0 is None:
-                self.quadrant0 = SpatialQuadTree2D(x, y, l, w, items, capacity)
-            quadToReturn = self.quadrant0
-        elif not chooseFromLeftQuads and chooseFromTopQuads:
-            if self.quadrant1 is None:
-                x += w
-                y += l
-                self.quadrant1 = SpatialQuadTree2D(x, y, l, w, items, capacity)
-            quadToReturn = self.quadrant1
-        elif chooseFromLeftQuads and not chooseFromTopQuads:
-            if self.quadrant2 is None:
-                y -= l
-                self.quadrant2 = SpatialQuadTree2D(x, y, l, w, items, capacity)
-            quadToReturn = self.quadrant2
-        elif not chooseFromLeftQuads and not chooseFromTopQuads:
-            if self.quadrant3 is None:
-                x += w
-                y -= l
-                self.quadrant3 = SpatialQuadTree2D(x, y, l, w, items, capacity)
-            quadToReturn = self.quadrant3
 
-        return quadToReturn
-
-    def isWithinCapacity(self):
-        return len(self.items) + 1 < self.quadrantCapacity
+    def isWithinCapacity(self, items, cap):
+        return len(items) + 1 < cap
 
     def increaseQuadDepth(self):
         pass
@@ -94,6 +65,9 @@ class SpatialQuadTree2D:
         pass
 
     def getItemsFromQuadsIntersectingXY(self, originX, originY):
+        pass
+
+    def containsItem(self, item):
         pass
 
     def updateQuadToUpdatedItem(self, item):
