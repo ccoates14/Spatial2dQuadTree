@@ -55,7 +55,7 @@ class SpatialQuadTree2D:
     def isWithinCapacity(self, items, cap):
         return len(items) + 1 < cap
 
-    def increaseQuadDepth(self):
+    def expandCapacity(self):
         pass
 
     def removeItem(self, item):
