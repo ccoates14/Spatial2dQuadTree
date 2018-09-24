@@ -24,7 +24,7 @@ class SpatialQuadTree2D:
                 return True
         return False
 
-    def xyToItemWhenNone(self,item ,x,y):
+    def xyToItemWhenNone(self, item, x, y):
         if self.hasNone(x, y):
             return self.getItemXY(item)
         return x, y
@@ -125,6 +125,7 @@ class SpatialQuadTree2D:
                 if len(i) > 0:
                     items = {**items, **i}
 
+
         else:
             for point in corners:
                 for i in self.itemsAndAssociatedQuads:
@@ -201,10 +202,3 @@ class SpatialQuadTree2D:
 
     def getChildrenQuadAsList(self):
         return [self.quadrant0, self.quadrant1, self.quadrant2, self.quadrant3]
-
-    def runUnitTests(self, sysArgs):
-        pass
-
-    if __name__ == "__main__":
-        import sys
-        runUnitTests(sys.argv)
