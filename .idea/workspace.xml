@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a65b20b7-a5a3-4df9-a15e-9d2f0b8118fb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Tester.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/QuadTestItem.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SpatialBasedQuadTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/SpatialBasedQuadTree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/Tester.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,13 +15,13 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Spatial2dQuadTree$SpatialBasedQuadTree.coverage" NAME="SpatialBasedQuadTree Coverage Results" MODIFIED="1537758912958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Spatial2dQuadTree$Unittests_in_Tester_py.coverage" NAME="Unittests in Tester.py Coverage Results" MODIFIED="1537759982252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Spatial2dQuadTree$Unittests_in_Tester_py.coverage" NAME="Unittests in Tester.py Coverage Results" MODIFIED="1538024872472" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="683477201">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.7" value="3" />
           <entry key="project.opened" value="3" />
         </counts>
@@ -28,41 +29,61 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="8" />
-          <entry key="py" value="4450" />
+          <entry key="py" value="6493" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="8" />
-          <entry key="Python" value="4450" />
+          <entry key="Python" value="6493" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="2" />
+          <entry key="Python" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="2" />
+          <entry key="py" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6590563">
+    <splitter split-orientation="horizontal" split-proportion="0.6510067">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Tester.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="102">
-                  <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+                <state relative-caret-position="-1001">
+                  <caret line="72" selection-start-line="72" selection-end-line="72" />
                   <folding>
-                    <marker date="1537759979806" expanded="true" signature="72:78" ph="..." />
-                    <marker date="1537759979806" expanded="true" signature="1096:1097" ph="..." />
+                    <element signature="e#0#37#0" expanded="true" />
+                    <marker date="1538024872441" expanded="true" signature="131:137" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="162:403" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="603:728" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="746:874" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="906:1458" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="1546:2402" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="2433:2557" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="3309:4293" ph="..." />
+                    <marker date="1538024872441" expanded="true" signature="4320:4596" ph="..." />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/QuadTestItem.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="85">
+                  <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+                  <folding>
+                    <marker date="1537760611113" expanded="true" signature="15:20" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -75,14 +96,14 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/SpatialBasedQuadTree.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3468">
-                  <caret line="204" selection-start-line="204" selection-end-line="204" />
+                <state relative-caret-position="117">
+                  <caret line="81" column="84" selection-start-line="81" selection-start-column="84" selection-end-line="81" selection-end-column="84" />
                   <folding>
-                    <marker date="1537759102490" expanded="true" signature="716:813" ph="..." />
-                    <marker date="1537759102490" expanded="true" signature="3502:3567" ph="..." />
-                    <marker date="1537759102490" expanded="true" signature="3608:4107" ph="..." />
-                    <marker date="1537759102490" expanded="true" signature="4936:4942" ph="..." />
-                    <marker date="1537759102490" expanded="true" signature="7934:7943" ph="..." />
+                    <marker date="1538024552830" expanded="true" signature="900:906" ph="..." />
+                    <marker date="1538024552830" expanded="true" signature="3756:3821" ph="..." />
+                    <marker date="1538024552830" expanded="true" signature="3862:4397" ph="..." />
+                    <marker date="1538024552830" expanded="true" signature="5226:5232" ph="..." />
+                    <marker date="1538024552830" expanded="true" signature="8224:8233" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -101,8 +122,13 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>chooseQuadByXY</find>
       <find>isWithinQuadRange</find>
+      <find>itemX</find>
+      <find>self.itemsAndAssociatedQuads</find>
+      <find>itemsAndAssociatedQuads</find>
+      <find>expandCapacity</find>
+      <find>initChildQuads</find>
+      <find>chooseQuadByXY</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -111,6 +137,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/QuadTestItem.py" />
         <option value="$PROJECT_DIR$/SpatialBasedQuadTree.py" />
         <option value="$PROJECT_DIR$/Tester.py" />
       </list>
@@ -226,35 +253,46 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_in_Tester_py - 2018.09.23 at 20h 18m 26s.xml">
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 21h 28m 04s.xml">
       <configuration name="Unittests in Tester.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_Tester_py - 2018.09.23 at 20h 22m 35s.xml">
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 21h 40m 34s.xml">
       <configuration name="Unittests in Tester.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_Tester_py - 2018.09.23 at 20h 27m 05s.xml">
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 21h 42m 16s.xml">
       <configuration name="Unittests in Tester.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_Tester_py - 2018.09.23 at 20h 27m 32s.xml">
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 21h 42m 34s.xml">
       <configuration name="Unittests in Tester.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_Tester_py - 2018.09.23 at 20h 32m 09s.xml">
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 21h 45m 04s.xml">
       <configuration name="Unittests in Tester.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_Tester_py - 2018.09.23 at 20h 32m 45s.xml">
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 21h 46m 08s.xml">
+      <configuration name="Unittests in Tester.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 21h 47m 38s.xml">
+      <configuration name="Unittests in Tester.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 22h 06m 27s.xml">
+      <configuration name="Unittests in Tester.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 22h 07m 23s.xml">
+      <configuration name="Unittests in Tester.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_Tester_py - 2018.09.26 at 22h 07m 52s.xml">
       <configuration name="Unittests in Tester.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" side_tool="true" visible="true" weight="0.118120804" />
+      <window_info content_ui="combo" id="Project" order="0" side_tool="true" weight="0.22214764" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4397163" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -279,27 +317,45 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/QuadTestItem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+          <folding>
+            <marker date="1537760611113" expanded="true" signature="15:20" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SpatialBasedQuadTree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3468">
-          <caret line="204" selection-start-line="204" selection-end-line="204" />
+        <state relative-caret-position="117">
+          <caret line="81" column="84" selection-start-line="81" selection-start-column="84" selection-end-line="81" selection-end-column="84" />
           <folding>
-            <marker date="1537759102490" expanded="true" signature="716:813" ph="..." />
-            <marker date="1537759102490" expanded="true" signature="3502:3567" ph="..." />
-            <marker date="1537759102490" expanded="true" signature="3608:4107" ph="..." />
-            <marker date="1537759102490" expanded="true" signature="4936:4942" ph="..." />
-            <marker date="1537759102490" expanded="true" signature="7934:7943" ph="..." />
+            <marker date="1538024552830" expanded="true" signature="900:906" ph="..." />
+            <marker date="1538024552830" expanded="true" signature="3756:3821" ph="..." />
+            <marker date="1538024552830" expanded="true" signature="3862:4397" ph="..." />
+            <marker date="1538024552830" expanded="true" signature="5226:5232" ph="..." />
+            <marker date="1538024552830" expanded="true" signature="8224:8233" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tester.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+        <state relative-caret-position="-1001">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
           <folding>
-            <marker date="1537759979806" expanded="true" signature="72:78" ph="..." />
-            <marker date="1537759979806" expanded="true" signature="1096:1097" ph="..." />
+            <element signature="e#0#37#0" expanded="true" />
+            <marker date="1538024872441" expanded="true" signature="131:137" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="162:403" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="603:728" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="746:874" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="906:1458" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="1546:2402" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="2433:2557" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="3309:4293" ph="..." />
+            <marker date="1538024872441" expanded="true" signature="4320:4596" ph="..." />
           </folding>
         </state>
       </provider>

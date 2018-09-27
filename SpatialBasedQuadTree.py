@@ -1,3 +1,5 @@
+from random import randint
+
 class SpatialQuadTree2D:
 
     def __init__(self, originX, originY, length, width, storedItems, quadrantCapacity):
@@ -5,15 +7,16 @@ class SpatialQuadTree2D:
         self.originY = originY
         self.length = length
         self.width = width
-        self.items = storedItems
-
+        self.itemsAndAssociatedQuads = {}
         self.quadrantCapacity = quadrantCapacity
         self.quadrant0 = None
         self.quadrant1 = None
         self.quadrant2 = None
         self.quadrant3 = None
 
-        self.itemsAndAssociatedQuads = storedItems
+        if storedItems is not None:
+            for i in storedItems:
+                self.add(i, i.x, i.y)
 
     def getItemXY(self, item):
         return item.x, item.y
@@ -42,7 +45,7 @@ class SpatialQuadTree2D:
                     self.expandCapacity()
                     added = self.add(item, itemX, itemY)
                 else:
-                    self.itemsAndAssociatedQuads.update(item)
+                    self.itemsAndAssociatedQuads[item] = self
                     added = True
 
         return added
@@ -67,18 +70,21 @@ class SpatialQuadTree2D:
 
         for i in items.keys():
             if self.isWithinQuadRange(i.x, i.y, originX, originY, width, length):
-                itemsBelonging.update(i, items[i])
+                itemsBelonging[i] = items[i]
 
         return itemsBelonging
 
     def chooseQuadByXY(self, originX, originY):
-        q = self.quadrant0
-        if originX < self.originX or originX > self.originX + self.width:
-            raise ValueError("originX not within quad")
-        if originY < self.originY or originY > self.originY + self.length:
-            raise ValueError("OriginY not within quad")
+        q = None
 
-        if self.isWithinQuadRange(originX, originY, self.quadrant1.originX, self.quadrant1.originY,
+        #TODO
+        #I MUST MAKE IT SO THAT WHEN IT HITS THE EDGE OF THE QUAD BUT IS STILL TECHNICALLY WITHIN THE QUAD IT DOESNT
+        # ALWAYS DEFUALT TO THAT QUAD IT SHOULD MAKE IT BALANCED OR PUT IT INTO BOTH
+
+        if self.isWithinQuadRange(originX, originY, self.quadrant0.originX, self.quadrant0.originY,
+                                  self.quadrant0.width / 2, self.quadrant0.length / 2):
+            q = self.quadrant0
+        elif self.isWithinQuadRange(originX, originY, self.quadrant1.originX, self.quadrant1.originY,
                                  self.quadrant1.width / 2, self.quadrant1.length / 2):
             q = self.quadrant1
         elif self.isWithinQuadRange(originX, originY, self.quadrant2.originX, self.quadrant2.originY,
@@ -105,7 +111,8 @@ class SpatialQuadTree2D:
                 q = self.chooseQuadByXY(itemX, itemY)
                 didRemove, itemRemoved = q.removeItem(item, itemX, itemY)
             else:
-                itemRemoved = self.itemsAndAssociatedQuads.pop(item, default=False)
+                itemRemoved = self.itemsAndAssociatedQuads[item]
+                del self.itemsAndAssociatedQuads[item]
 
                 if itemRemoved == False:
                     itemRemoved = None
