@@ -73,7 +73,18 @@ class Tester(unittest.TestCase):
         self.assertTrue(q.isWithinQuadRange(1000, 1000))
 
     def testFindItemsThatBelongInQuad(self):
-        pass
+        q,itemsAdded = self.testAdd(1000)
+        itemsToBeChecked = {i: q for i in itemsAdded}
+
+        for i in range(100):
+            itemsToBeChecked[TestItem(randint(1000,10000), randint(1000,10000))] : q
+
+        itemsToBelongInQuad = q.findItemsThatBelongInQuad(itemsToBeChecked, q.originX, q.originY, q.width, q.length)
+
+        for i in itemsToBeChecked:
+
+            self.assertTrue(i in itemsToBelongInQuad)
+
 
     def testChooseQuadByXY(self):
         q0,q1,q2,q3 = getChildrenOfBaseSpatialTree()
@@ -124,7 +135,13 @@ class Tester(unittest.TestCase):
         self.assertTrue(q.isWithinCapacity([TestItem(10,10)], q.quadrantCapacity))
 
     def testExpandCapacity(self):
-        pass
+        q = getBaseSpatialTree()
+
+        q.expandCapacity()
+        self.assertTrue(q.quadrant0 is not None)
+        self.assertTrue(q.quadrant1 is not None)
+        self.assertTrue(q.quadrant2 is not None)
+        self.assertTrue(q.quadrant3 is not None)
 
     def testRemoveItem(self, amountToRemove=None):
         if amountToRemove is None:
@@ -177,7 +194,52 @@ class Tester(unittest.TestCase):
         return item in q.itemsAndAssociatedQuads
 
     def testGetAllItemsWithinWidthLength(self):
-        pass
+        q = getBaseSpatialTree()
+        areaX = 450
+        areaY = 600
+        areaWidth = 100
+        areaLength = 100
+
+        itemsNotToBeIncluded = []
+        itemsToBeIncluded = []
+
+        def getNonAreaX():
+            if randint(0,1):
+                return randint(0, 449)# X before area to look at
+            return randint(551, q.width)
+
+        def getNonAreaY():
+            if randint(0,1):
+                return randint(0, 599)# Y before area Y
+            return randint(700, q.length)
+
+        def getAreaX():
+            return randint(areaX, areaX + areaWidth)
+
+        def getAreaY():
+            return randint(areaY, areaY + areaLength)
+
+        for i in range(1000):
+            itemsNotToBeIncluded.append(TestItem(getNonAreaX(), getNonAreaY()))
+
+        for i in range(1000):
+            itemsToBeIncluded.append(TestItem(getAreaX(), getAreaY()))
+
+        for i in itemsToBeIncluded:
+            q.add(i)
+
+        for i in itemsNotToBeIncluded:
+            q.add(i)
+
+        itemsWithinWidthLength = q.getAllItemsWithinWidthLength(areaX, areaY, areaWidth, areaLength)
+
+        for i in itemsToBeIncluded:
+            if i not in itemsWithinWidthLength:
+                print("X:"+str(i.x)+" y:"+str(i.y))
+            self.assertTrue(i in itemsWithinWidthLength)
+
+        for i in itemsNotToBeIncluded:
+            self.assertFalse(i in itemsWithinWidthLength)
 
     def testContainsItem(self):
         q, itemsAdded = self.testAdd()
@@ -188,8 +250,6 @@ class Tester(unittest.TestCase):
 
         for i in itemsNotAdded:
             self.assertFalse(q.containsItem(i))
-
-
 
     def testInitChildQuads(self):
         q = getBaseSpatialTree()

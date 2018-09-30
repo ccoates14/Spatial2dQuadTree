@@ -127,22 +127,25 @@ class SpatialQuadTree2D:
         return didRemove, itemRemoved
 
     def getAllItemsWithinWidthLength(self, originX, originY, width, length):
-        corners = (originX, originY), (originX + width, originY), (originX, originY + length), \
-                  (originX + width, originY + length)
+        corners = (originX, originY), (originX + width, originY), (originX + width, originY + length), \
+                  (originX, originY + length)
         items = {}
 
         if self.areChildrenBorn():
             for point in corners:
                 q = self.chooseQuadByXY(point[0], point[1])
+
+                if q is None:
+                    break
+
                 i = q.getAllItemsWithinWidthLength(point[0], point[1], q.width, q.length)
 
                 if len(i) > 0:
                     items = {**items, **i}
         else:
-            for point in corners:
-                for i in self.itemsAndAssociatedQuads:
-                    if self.isWithinQuadRange(i.x, i.y, point[0], point[1], width, length):
-                        items.update(i, self.itemsAndAssociatedQuads[i])
+            for i in self.itemsAndAssociatedQuads:
+                if self.isWithinQuadRange(i.x, i.y,originX, originY, width, length):
+                    items[i] = self
 
         return items
 
