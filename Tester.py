@@ -2,6 +2,9 @@ import unittest, SpatialBasedQuadTree
 from SpatialBasedQuadTree import SpatialQuadTree2D
 from QuadTestItem import TestItem
 from random import randint
+
+runPerformanceTests = False
+
 class Tester(unittest.TestCase):
 
     def test_GetItemXY(self):
@@ -36,8 +39,11 @@ class Tester(unittest.TestCase):
 
         return q, itemsAdded
 
-    #OFF
-    def bigAdd(self):
+    def testBigAdd(self):
+        global runPerformanceTests
+
+        if not runPerformanceTests:
+            return
 
         n = 1000 * 100
         x,y = 0,0
@@ -164,7 +170,9 @@ class Tester(unittest.TestCase):
             return False
 
         if item in q.itemsAndAssociatedQuads:
-            print(q.itemsAndAssociatedQuads)
+            print("item xy: " + str(item.x) + " " + str(item.y) + " in Q: width: " + str(q.width) + " len: " +
+                  str(q.length) +
+                  " x: " + str(q.originX) + " y: " + str(q.originY))
 
         return item in q.itemsAndAssociatedQuads
 

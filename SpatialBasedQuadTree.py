@@ -112,11 +112,11 @@ class SpatialQuadTree2D:
                 didRemove, itemRemoved = q.removeItem(item, itemX, itemY)
             else:
                 found = item in self.itemsAndAssociatedQuads
-                del self.itemsAndAssociatedQuads[item]
 
-                if found is not False:
+                if found:
                     didRemove = True
                     itemRemoved = item
+                    del self.itemsAndAssociatedQuads[item]
 
             if didRemove is self.containsItem(item):
                 raise AssertionError('didRemove and containsItem matched! With didRemove:' + str(didRemove)
@@ -167,7 +167,7 @@ class SpatialQuadTree2D:
         c = self.quadrantCapacity
         itemsThatBelongInChild = self.findItemsThatBelongInQuad(originX=x, originY=y, length=l, width=w,
                                                                 items=self.itemsAndAssociatedQuads)
-
+        self.removeItemsFromItemsDict(itemsThatBelongInChild.keys())
         self.quadrant0 = SpatialQuadTree2D(originX=x, originY=y, length=l, width=w, quadrantCapacity=c,
                                            storedItems=itemsThatBelongInChild)
         ####################################################
@@ -175,6 +175,7 @@ class SpatialQuadTree2D:
         x += self.width / 2
         itemsThatBelongInChild = self.findItemsThatBelongInQuad(originX=x, originY=y, length=l, width=w,
                                                                 items=self.itemsAndAssociatedQuads)
+        self.removeItemsFromItemsDict(itemsThatBelongInChild.keys())
         self.quadrant1 = SpatialQuadTree2D(originX=x, originY=y, length=l, width=w, quadrantCapacity=c,
                                            storedItems=itemsThatBelongInChild)
 
@@ -184,6 +185,7 @@ class SpatialQuadTree2D:
         y = self.originY + self.length / 2
         itemsThatBelongInChild = self.findItemsThatBelongInQuad(originX=x, originY=y, length=l, width=w,
                                                                 items=self.itemsAndAssociatedQuads)
+        self.removeItemsFromItemsDict(itemsThatBelongInChild.keys())
         self.quadrant2 = SpatialQuadTree2D(originX=x, originY=y, length=l, width=w, quadrantCapacity=c,
                                            storedItems=itemsThatBelongInChild)
         #####################################################################
@@ -193,6 +195,7 @@ class SpatialQuadTree2D:
         y = self.originY + self.length / 2
         itemsThatBelongInChild = self.findItemsThatBelongInQuad(originX=x, originY=y, length=l, width=w,
                                                                 items=self.itemsAndAssociatedQuads)
+        self.removeItemsFromItemsDict(itemsThatBelongInChild.keys())
         self.quadrant3 = SpatialQuadTree2D(originX=x, originY=y, length=l, width=w, quadrantCapacity=c,
                                            storedItems=itemsThatBelongInChild)
 
@@ -215,3 +218,8 @@ class SpatialQuadTree2D:
 
     def getChildrenQuadAsList(self):
         return [self.quadrant0, self.quadrant1, self.quadrant2, self.quadrant3]
+
+    def removeItemsFromItemsDict(self, items):
+        for i in items:
+            if i in self.itemsAndAssociatedQuads:
+                del self.itemsAndAssociatedQuads[i]
