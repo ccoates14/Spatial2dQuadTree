@@ -1,4 +1,3 @@
-from random import randint
 
 class SpatialQuadTree2D:
 
@@ -36,10 +35,11 @@ class SpatialQuadTree2D:
         added = False
         itemX, itemY = self.xyToItemWhenNone(item, itemX, itemY)
 
-        if not self.containsItem(item):
+        if self.isWithinQuadRange(itemX, itemY, self.originX, self.originY, self.width, self.length) \
+                and not self.containsItem(item):
             if self.areChildrenBorn():
                 q = self.chooseQuadByXY(originY=itemY, originX=itemX)
-                q.add(item, itemX, itemY)
+                added = q.add(item, itemX, itemY)
             else:
                 if not self.isWithinCapacity(self.itemsAndAssociatedQuads, self.quadrantCapacity):
                     self.expandCapacity()
@@ -82,16 +82,16 @@ class SpatialQuadTree2D:
         # ALWAYS DEFUALT TO THAT QUAD IT SHOULD MAKE IT BALANCED OR PUT IT INTO BOTH
 
         if self.isWithinQuadRange(originX, originY, self.quadrant0.originX, self.quadrant0.originY,
-                                  self.quadrant0.width / 2, self.quadrant0.length / 2):
+                                  self.quadrant0.width , self.quadrant0.length ):
             q = self.quadrant0
         elif self.isWithinQuadRange(originX, originY, self.quadrant1.originX, self.quadrant1.originY,
-                                 self.quadrant1.width / 2, self.quadrant1.length / 2):
+                                 self.quadrant1.width , self.quadrant1.length ):
             q = self.quadrant1
         elif self.isWithinQuadRange(originX, originY, self.quadrant2.originX, self.quadrant2.originY,
-                                 self.quadrant2.width / 2, self.quadrant2.length / 2):
+                                 self.quadrant2.width , self.quadrant2.length ):
             q = self.quadrant2
         elif self.isWithinQuadRange(originX, originY, self.quadrant3.originX, self.quadrant3.originY,
-                                 self.quadrant3.width / 2, self.quadrant3.length / 2):
+                                 self.quadrant3.width , self.quadrant3.length ):
             q = self.quadrant3
 
         return q
@@ -111,11 +111,18 @@ class SpatialQuadTree2D:
                 q = self.chooseQuadByXY(itemX, itemY)
                 didRemove, itemRemoved = q.removeItem(item, itemX, itemY)
             else:
-                itemRemoved = self.itemsAndAssociatedQuads[item]
+                found = item in self.itemsAndAssociatedQuads
                 del self.itemsAndAssociatedQuads[item]
 
-                if itemRemoved == False:
-                    itemRemoved = None
+                if found is not False:
+                    didRemove = True
+                    itemRemoved = item
+
+            if didRemove is self.containsItem(item):
+                raise AssertionError('didRemove and containsItem matched! With didRemove:' + str(didRemove)
+                                     + " contains:" + str(self.containsItem(item)) + " item:{x:" + str(item.x) +
+                                     " ,y:" + str(item.y) + "} Quad:{x:" + str(self.originX) + ", y:" + str(self.originY)
+                                     + " , width:" + str(self.width) + " ,length:" + str(self.length) + "}")
 
         return didRemove, itemRemoved
 
@@ -131,8 +138,6 @@ class SpatialQuadTree2D:
 
                 if len(i) > 0:
                     items = {**items, **i}
-
-
         else:
             for point in corners:
                 for i in self.itemsAndAssociatedQuads:
@@ -142,17 +147,16 @@ class SpatialQuadTree2D:
         return items
 
     def containsItem(self, item, itemX=None, itemY=None):
-        doesContainItem = False
+
+        if itemX is None or itemY is None:
+            return self.containsItem(item, item.x, item.y)
+
         if self.areChildrenBorn():
-            if itemX is not None and itemY is not None:
-                q = self.chooseQuadByXY(itemX, itemY)
-                doesContainItem = q.containsItem(item, itemX, itemY)
-            else:
-                for c in self.getChildrenQuadAsList():
-                    if c.containsItem(item):
-                        doesContainItem = True
+            q = self.chooseQuadByXY(itemX, itemY)
+            doesContainItem = q.containsItem(item, itemX, itemY)
         else:
             doesContainItem = item in self.itemsAndAssociatedQuads
+
         return doesContainItem
 
     def initChildQuads(self, clearParentItemsWhenDone=False):
@@ -164,7 +168,7 @@ class SpatialQuadTree2D:
         itemsThatBelongInChild = self.findItemsThatBelongInQuad(originX=x, originY=y, length=l, width=w,
                                                                 items=self.itemsAndAssociatedQuads)
 
-        self.quadrant0 = SpatialQuadTree2D(originX=x, originY=x, length=l, width=w, quadrantCapacity=c,
+        self.quadrant0 = SpatialQuadTree2D(originX=x, originY=y, length=l, width=w, quadrantCapacity=c,
                                            storedItems=itemsThatBelongInChild)
         ####################################################
         #adjust args for q1 right top
@@ -175,16 +179,18 @@ class SpatialQuadTree2D:
                                            storedItems=itemsThatBelongInChild)
 
         #####################################################################
-        #this is bottom left
-        x = self.originX
-        y += self.length / 2
+        #this is bottom right
+        x = self.originX + self.width / 2
+        y = self.originY + self.length / 2
         itemsThatBelongInChild = self.findItemsThatBelongInQuad(originX=x, originY=y, length=l, width=w,
                                                                 items=self.itemsAndAssociatedQuads)
         self.quadrant2 = SpatialQuadTree2D(originX=x, originY=y, length=l, width=w, quadrantCapacity=c,
                                            storedItems=itemsThatBelongInChild)
         #####################################################################
-        # this is bottom right
-        x = self.originX + self.width / 2
+        # this is bottom left
+
+        x = self.originX
+        y = self.originY + self.length / 2
         itemsThatBelongInChild = self.findItemsThatBelongInQuad(originX=x, originY=y, length=l, width=w,
                                                                 items=self.itemsAndAssociatedQuads)
         self.quadrant3 = SpatialQuadTree2D(originX=x, originY=y, length=l, width=w, quadrantCapacity=c,
