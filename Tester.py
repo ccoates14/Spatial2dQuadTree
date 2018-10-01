@@ -169,7 +169,7 @@ class Tester(unittest.TestCase):
     Forcibly looks at the quad and all its children quads to see if
     item is in it
     '''
-    def quadContainsItem(self, q, item):
+    def quadContainsItem(self, q, item, print=False):
         if q.quadrant0 is not None:
             if self.quadContainsItem(q.quadrant0, item):
                 return True
@@ -186,7 +186,7 @@ class Tester(unittest.TestCase):
         if q.itemsAndAssociatedQuads is None:
             return False
 
-        if item in q.itemsAndAssociatedQuads:
+        if item in q.itemsAndAssociatedQuads and print:
             print("item xy: " + str(item.x) + " " + str(item.y) + " in Q: width: " + str(q.width) + " len: " +
                   str(q.length) +
                   " x: " + str(q.originX) + " y: " + str(q.originY))
@@ -204,12 +204,12 @@ class Tester(unittest.TestCase):
         itemsToBeIncluded = []
 
         def getNonAreaX():
-            if randint(0,1):
+            if randint(0, 1):
                 return randint(0, 449)# X before area to look at
             return randint(551, q.width)
 
         def getNonAreaY():
-            if randint(0,1):
+            if randint(0, 1):
                 return randint(0, 599)# Y before area Y
             return randint(700, q.length)
 
@@ -219,10 +219,10 @@ class Tester(unittest.TestCase):
         def getAreaY():
             return randint(areaY, areaY + areaLength)
 
-        for i in range(1000):
+        for i in range(100):
             itemsNotToBeIncluded.append(TestItem(getNonAreaX(), getNonAreaY()))
 
-        for i in range(1000):
+        for i in range(100):
             itemsToBeIncluded.append(TestItem(getAreaX(), getAreaY()))
 
         for i in itemsToBeIncluded:
@@ -235,10 +235,12 @@ class Tester(unittest.TestCase):
 
         for i in itemsToBeIncluded:
             if i not in itemsWithinWidthLength:
-                print("X:"+str(i.x)+" y:"+str(i.y))
+                print("Should: "+"x: " + str(i.x) + " y: " + str(i.y))
+            self.assertTrue(self.quadContainsItem(q,i))
             self.assertTrue(i in itemsWithinWidthLength)
 
         for i in itemsNotToBeIncluded:
+            self.assertTrue(self.quadContainsItem(q, i))
             self.assertFalse(i in itemsWithinWidthLength)
 
     def testContainsItem(self):

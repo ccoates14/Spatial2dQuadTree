@@ -127,24 +127,37 @@ class SpatialQuadTree2D:
         return didRemove, itemRemoved
 
     def getAllItemsWithinWidthLength(self, originX, originY, width, length):
-        corners = (originX, originY), (originX + width, originY), (originX + width, originY + length), \
-                  (originX, originY + length)
         items = {}
+        searchCorners = (originX, originY), (originX + width, originY), (originX + width, originY + length), \
+                        (originX, originY + length)
 
         if self.areChildrenBorn():
-            for point in corners:
-                q = self.chooseQuadByXY(point[0], point[1])
+            for child in self.getChildrenQuadAsList():
+                childWithinWidthLength = False
+                childCorners = (child.originX, child.originY), (child.originX + child.width, child.originY),
+                (child.originX + child.width, child.originY + child.length), \
+                (child.originX, child.originY + child.length)
 
-                if q is None:
-                    break
+                corners = searchCorners
 
-                i = q.getAllItemsWithinWidthLength(point[0], point[1], q.width, q.length)
+                if width > child.width and length > child.length:
+                    corners = childCorners
 
-                if len(i) > 0:
-                    items = {**items, **i}
+                for c in corners:
+
+                    if self.isWithinQuadRange(c[0], c[1], originX, originY, width, length):
+                        childWithinWidthLength = True
+                        break
+
+                if childWithinWidthLength:
+                    i = child.getAllItemsWithinWidthLength(originX, originY, width, length)
+
+                    if len(i) > 0:
+                        items = {**items, **i}
+
         else:
             for i in self.itemsAndAssociatedQuads:
-                if self.isWithinQuadRange(i.x, i.y,originX, originY, width, length):
+                if self.isWithinQuadRange(i.x, i.y, originX, originY, width, length):
                     items[i] = self
 
         return items
