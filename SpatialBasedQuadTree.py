@@ -1,5 +1,7 @@
 
 class SpatialQuadTree2D:
+    itemsToQuad = {}
+    quadsToItems = {}
 
     def __init__(self, originX, originY, length, width, storedItems, quadrantCapacity):
         self.originX = originX
@@ -46,6 +48,7 @@ class SpatialQuadTree2D:
                     added = self.add(item, itemX, itemY)
                 else:
                     self.itemsAndAssociatedQuads[item] = self
+                    SpatialQuadTree2D.itemsToQuad[item] = self
                     added = True
 
         return added
@@ -98,9 +101,10 @@ class SpatialQuadTree2D:
     def expandCapacity(self):
         self.initChildQuads(clearParentItemsWhenDone=True)
 
-    def removeItem(self, item, itemX, itemY):
+    def removeItem(self, item, itemX=None, itemY=None):
         didRemove = False
         itemRemoved = None
+        itemX, itemY = self.xyToItemWhenNone(item, itemX, itemY)
 
         if self.containsItem(item, itemX, itemY):
             if self.areChildrenBorn():
@@ -113,12 +117,7 @@ class SpatialQuadTree2D:
                     didRemove = True
                     itemRemoved = item
                     del self.itemsAndAssociatedQuads[item]
-
-            if didRemove is self.containsItem(item, itemX, itemY):
-                raise AssertionError('didRemove and containsItem matched! With didRemove:' + str(didRemove)
-                                     + " contains:" + str(self.containsItem(item)) + " item:{x:" + str(item.x) +
-                                     " ,y:" + str(item.y) + "} Quad:{x:" + str(self.originX) + ", y:" + str(self.originY)
-                                     + " , width:" + str(self.width) + " ,length:" + str(self.length) + "}")
+                    del SpatialQuadTree2D.itemsToQuad[item]
 
         return didRemove, itemRemoved
 
@@ -216,9 +215,14 @@ class SpatialQuadTree2D:
             self.itemsAndAssociatedQuads = {}
 
 
-    def updateQuadToUpdatedItem(self, item, itemX, itemY, oldItemX, oldItemY):
+    def updateQuadToUpdatedItem(self, item, itemNewX, itemNewY, oldItemX, oldItemY):
+        if (not SpatialQuadTree2D.itemsToQuad[item].isWithinQuadRange(itemNewX + 1, itemNewY + 1) and
+                not SpatialQuadTree2D.itemsToQuad[item].isWithinQuadRange(itemNewX - 1, itemNewY - 1) and
+                SpatialQuadTree2D.itemsToQuad[item].isWithinQuadRange(itemNewX, itemNewY)):
+            return None
+
         self.removeItem(item, oldItemX, oldItemY)
-        return self.add(item, itemX, itemY)
+        return self.add(item, itemNewX, itemNewY)
 
     def areChildrenBorn(self):
         childrenAreBorn = False
@@ -235,3 +239,6 @@ class SpatialQuadTree2D:
         for i in items:
             if i in self.itemsAndAssociatedQuads:
                 del self.itemsAndAssociatedQuads[i]
+
+    def getNumberOfItemsTotal(self):
+        return len(SpatialQuadTree2D.itemsToQuad)
