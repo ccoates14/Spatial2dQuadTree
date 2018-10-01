@@ -169,29 +169,30 @@ class Tester(unittest.TestCase):
     Forcibly looks at the quad and all its children quads to see if
     item is in it
     '''
-    def quadContainsItem(self, q, item, print=False):
+    def quadContainsItem(self, q, item):
+        return self.getQuadContainingItem(q, item) is not None
+
+    def getQuadContainingItem(self,q, item):
         if q.quadrant0 is not None:
             if self.quadContainsItem(q.quadrant0, item):
-                return True
+                return q.quadrant0
         if q.quadrant1 is not None:
             if self.quadContainsItem(q.quadrant1, item):
-                return True
+                return q.quadrant1
         if q.quadrant2 is not None:
             if self.quadContainsItem(q.quadrant2, item):
-                return True
+                return q.quadrant2
         if q.quadrant3 is not None:
             if self.quadContainsItem(q.quadrant3, item):
-                return True
+                return q.quadrant3
 
         if q.itemsAndAssociatedQuads is None:
-            return False
+            return None
 
-        if item in q.itemsAndAssociatedQuads and print:
-            print("item xy: " + str(item.x) + " " + str(item.y) + " in Q: width: " + str(q.width) + " len: " +
-                  str(q.length) +
-                  " x: " + str(q.originX) + " y: " + str(q.originY))
+        if item in q.itemsAndAssociatedQuads:
+            return q
 
-        return item in q.itemsAndAssociatedQuads
+        return None
 
     def testGetAllItemsWithinWidthLength(self):
         q = getBaseSpatialTree()
@@ -294,7 +295,23 @@ class Tester(unittest.TestCase):
         self.assertTrue(q3.length == q.length / 2)
 
     def testUpdateQuadToUpdatedItem(self):
-        pass
+        q, itemsAdded = self.testAdd(100)
+
+        for i in range(5000):
+            t = itemsAdded[randint(0, len(itemsAdded) - 1)]
+            oldX, oldY = t.x, t.y
+            t.x = randint(0, q.width)
+            t.y = randint(0, q.length)
+
+            q.updateQuadToUpdatedItem(t, t.x, t.y, oldX, oldY)
+
+            self.assertTrue(q.containsItem(t))
+
+            qTemp = self.getQuadContainingItem(q, t)
+
+            self.assertTrue(qTemp.isWithinQuadRange(t.x, t.y))
+
+
 
     def testAreChildrenBorn(self):
         q = getBaseSpatialTree()
@@ -312,7 +329,7 @@ class Tester(unittest.TestCase):
         for i in range(1000):
             q.add(TestItem(randint(0, i), randint(0, i)))
 
-        q0,q1,q2,q3 = q.getChildrenQuadAsList()
+        q0,q1,q2,q3 = q.getChildrenQuadAsTuple()
 
         self.assertTrue(q0 is not None)
         self.assertTrue(q1 is not None)

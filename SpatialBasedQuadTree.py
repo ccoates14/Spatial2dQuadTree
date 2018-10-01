@@ -77,10 +77,6 @@ class SpatialQuadTree2D:
     def chooseQuadByXY(self, originX, originY):
         q = None
 
-        #TODO
-        #I MUST MAKE IT SO THAT WHEN IT HITS THE EDGE OF THE QUAD BUT IS STILL TECHNICALLY WITHIN THE QUAD IT DOESNT
-        # ALWAYS DEFUALT TO THAT QUAD IT SHOULD MAKE IT BALANCED OR PUT IT INTO BOTH
-
         if self.isWithinQuadRange(originX, originY, self.quadrant0.originX, self.quadrant0.originY,
                                   self.quadrant0.width , self.quadrant0.length ):
             q = self.quadrant0
@@ -118,7 +114,7 @@ class SpatialQuadTree2D:
                     itemRemoved = item
                     del self.itemsAndAssociatedQuads[item]
 
-            if didRemove is self.containsItem(item):
+            if didRemove is self.containsItem(item, itemX, itemY):
                 raise AssertionError('didRemove and containsItem matched! With didRemove:' + str(didRemove)
                                      + " contains:" + str(self.containsItem(item)) + " item:{x:" + str(item.x) +
                                      " ,y:" + str(item.y) + "} Quad:{x:" + str(self.originX) + ", y:" + str(self.originY)
@@ -132,7 +128,7 @@ class SpatialQuadTree2D:
                         (originX, originY + length)
 
         if self.areChildrenBorn():
-            for child in self.getChildrenQuadAsList():
+            for child in self.getChildrenQuadAsTuple():
                 childWithinWidthLength = False
                 childCorners = (child.originX, child.originY), (child.originX + child.width, child.originY),
                 (child.originX + child.width, child.originY + child.length), \
@@ -220,20 +216,20 @@ class SpatialQuadTree2D:
             self.itemsAndAssociatedQuads = {}
 
 
-    def updateQuadToUpdatedItem(self, item, itemX, itemY):
-        self.removeItem(item, itemX, itemY)
+    def updateQuadToUpdatedItem(self, item, itemX, itemY, oldItemX, oldItemY):
+        self.removeItem(item, oldItemX, oldItemY)
         return self.add(item, itemX, itemY)
 
     def areChildrenBorn(self):
         childrenAreBorn = False
-        for c in self.getChildrenQuadAsList():
+        for c in self.getChildrenQuadAsTuple():
             if c is not None:
                 childrenAreBorn = True
                 break
         return childrenAreBorn
 
-    def getChildrenQuadAsList(self):
-        return [self.quadrant0, self.quadrant1, self.quadrant2, self.quadrant3]
+    def getChildrenQuadAsTuple(self):
+        return self.quadrant0, self.quadrant1, self.quadrant2, self.quadrant3
 
     def removeItemsFromItemsDict(self, items):
         for i in items:
