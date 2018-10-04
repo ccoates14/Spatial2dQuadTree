@@ -74,17 +74,27 @@ class Tester(unittest.TestCase):
 
     def testFindItemsThatBelongInQuad(self):
         q,itemsAdded = self.testAdd(1000)
-        itemsToBeChecked = {i: q for i in itemsAdded}
+        itemsBelongingInQuad = []
+        itemsNotBelongingInQuad = []
+        itemsToBeChecked = {}
 
-        for i in range(100):
-            itemsToBeChecked[TestItem(randint(1000,10000), randint(1000,10000))] : q
+        for i in itemsAdded:
+
+            if randint(0,1) is 1:
+                itemsBelongingInQuad.append(i)
+            else:
+                itemsNotBelongingInQuad.append(TestItem(10000,randint(10000,100000)))
+
+        for i in itemsBelongingInQuad + itemsNotBelongingInQuad:
+            itemsToBeChecked[i] = q
 
         itemsToBelongInQuad = q.findItemsThatBelongInQuad(itemsToBeChecked, q.originX, q.originY, q.width, q.length)
 
-        for i in itemsToBeChecked:
-
+        for i in itemsBelongingInQuad:
             self.assertTrue(i in itemsToBelongInQuad)
 
+        for i in itemsNotBelongingInQuad:
+            self.assertTrue(i not in itemsToBelongInQuad)
 
     def testChooseQuadByXY(self):
         q0,q1,q2,q3 = getChildrenOfBaseSpatialTree()
